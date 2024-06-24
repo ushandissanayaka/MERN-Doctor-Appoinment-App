@@ -2,7 +2,7 @@ const userModel = require('../models/userModels')
 const bcrypt = require('bcryptjs')
 
 //register callback
-const registerController = async (req,res) =>{
+const registerController = async (req,res) => {
 
 try{
     const exisitingUser = await userModel.findOne({email:req.body.email})
@@ -19,7 +19,7 @@ try{
     
 } catch (error) {
      console.log(error)
-     res.status(500).send({sucess:false, message: `Register controller ${error.message}`})
+     res.status(500).send({success:false, message: `Register controller ${error.message}`})
 }
 };
 

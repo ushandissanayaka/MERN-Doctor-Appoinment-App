@@ -4,10 +4,32 @@
     justify-content: center;
     height: 100vh;
     border: 1px solid black;
+    background-image: url('../../public/4433940.webp');
+    background-size: cover;
+    background-position: center;
+
+
 }
+.form-container-box{
+    background: rgba(0, 0, 0, 0.8); /* White background with 70% opacity */
+    border: 1px solid gray;
+    
+    border-radius: 10px; /* Optional: to give rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: to add a subtle shadow */
+    width: 500px; /* Optional: set a fixed width */
+    text-align: center; 
+}
+
 .register-form{
+   
+    padding: 10px;
     border: 1px solid gray;
     padding: 30px;
+    border-radius: 10px;
+    color: white;
    
     
+}
+.ant-form-item-label > label {
+    color: white !important;
 }

@@ -26,8 +26,10 @@ const Register = () => {
     
     return (
         <div className='form-container'>
+
+            <div className='form-container-box'>
             <Form layout='vertical' onFinish={onFinishHandler} className="register-form">
-                <h3 className='text-center'>Register Form</h3>
+                <h3 className='text-center '>Register Form</h3>
 
                 <Form.Item label="Name" name="name">
                     <Input type="text" required />
@@ -45,6 +47,7 @@ const Register = () => {
 
                 <button className='btn btn-primary' type='submit'>Register</button>
             </Form>
+            </div>
         </div>
     );
 };

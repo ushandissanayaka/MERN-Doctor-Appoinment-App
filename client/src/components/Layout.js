@@ -1,10 +1,11 @@
 import React from 'react';
 import "../styles/LayoutStyles.css";
-import {message} from 'antd'
+import {Badge, message} from 'antd'
 import { UserMenu, adminMenu } from '../Data/data';
-import {Link,Navigate,useLocation, useNavigate } from 'react-router-dom'
+import {Link,useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 const Layout = ({ children }) => {
+  
     const {user } = useSelector(state => state.user)
     const loaction = useLocation()
     const navigate = useNavigate()
@@ -50,7 +51,10 @@ const Layout = ({ children }) => {
           <div className="content">
             <div className="header">
                 <div className='header-content'>
+                <Badge count={user && user.notification.length}>
                 <i class="fa-solid fa-bell"></i>
+                </Badge>
+               
                 <Link to="/profile">{user?.name}</Link>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import "../styles/LayoutStyles.css";
 import {Badge, message} from 'antd'
-import { UserMenu, adminMenu } from '../Data/data';
+import { UserMenu, adminMenu } from './../Data/data';
 import {Link,useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 const Layout = ({ children }) => {

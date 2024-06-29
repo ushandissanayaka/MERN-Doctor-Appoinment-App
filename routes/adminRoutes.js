@@ -13,4 +13,4 @@ router.get('/getAllDoctors', authMiddleware, getAllDoctorsController)
 
 //post account status
 router.post('/changeAccountStatus', authMiddleware, changeAccountStatusController)
-module.exports = router
+module.exports = router 

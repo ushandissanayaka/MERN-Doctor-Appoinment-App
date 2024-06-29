@@ -1,23 +1,49 @@
 import React from 'react';
 import "../styles/LayoutStyles.css";
 import {Badge, message} from 'antd'
-import { UserMenu, adminMenu } from './../Data/data';
+import { userMenu, adminMenu } from './../Data/data';
 import {Link,useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 const Layout = ({ children }) => {
-  
-    const {user } = useSelector(state => state.user)
+  const {user } = useSelector(state => state.user)
     const loaction = useLocation()
     const navigate = useNavigate()
-
     //logout function
     const handleLogout = () => {
         localStorage.clear()
         message.success('Logout Successfully')
         navigate('/login');
     };
-    //reading menu list
-    const SidebarMenu = user?.isAdmin ? adminMenu : UserMenu
+
+    
+    //==========doctor menu=============
+    const doctorMenu = [
+      {
+          name:'Home',
+          path:'/',
+          icon: "fa-solid fa-house"
+      },
+      {
+          name:'Appoinments',
+          path:"/appoinments",
+          icon:'fa-solid fa-clipboard-list'
+      },
+     
+      {
+          name:'Profile',
+          path:`/doctor/profile/${user?._id}`,
+          icon:'fa-solid fa-user'
+      },
+     
+  
+  ]
+    //==========doctor menu=============
+    //rendering menu list
+    const SidebarMenu = user?.isAdmin
+    ? adminMenu
+    : user?.isDoctor 
+    ? doctorMenu
+    : userMenu;
   return (
     <>
       <div className="main">

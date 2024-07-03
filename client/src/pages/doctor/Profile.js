@@ -35,7 +35,7 @@ const Profile = () => {
             dispatch(hideLoading());
             if (res.data.success) {
                 message.success(res.data.message);
-                navigate('/');
+                navigate("/");
             } else {
                 message.error(res.data.success);
             }
@@ -81,8 +81,8 @@ const Profile = () => {
                         ...doctor,
                         timings: doctor.timings && doctor.timings.length === 2
                             ? [
-                                moment(doctor.timings[0], 'HH:mm'),
-                                moment(doctor.timings[1], 'HH:mm')
+                                moment(doctor.timings[0], "HH:mm"),
+                                moment(doctor.timings[1], "HH:mm"),
                               ]
                             : [],
                         feesperConsultation: doctor.feesPerConsultation,

@@ -1,8 +1,9 @@
 const userModel = require('../models/userModels');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const doctorModel = require('../models/DoctorModel')
-const appointmentModel = require('../models/appointmentModel')
+const doctorModel = require('../models/DoctorModel');
+const appointmentModel = require('../models/appointmentModel');
+const moment = require('moment')
 // register callback
 const registerController = async (req, res) => {
   try {
@@ -174,6 +175,8 @@ const getAllDoctorsController = async (req,res) => {
 //BOOK APPOINTMENT
 const bookAppointmentController = async (req,res) => {
   try{
+      req.body.date = moment(req.body.date, 'DD-MM-YYYY').toISOString();
+      req.body.time = moment(req.body.time, 'HH:mm').toISOString();
       req.body.status = 'pending'
       const newAppointment = new appointmentModel(req.body)
       await newAppointment.save()
@@ -194,8 +197,44 @@ const bookAppointmentController = async (req,res) => {
       success:false,
       error,
       message:'Error while Booking Appointment'
-    })
+    });
+  }
+};
+
+//booking availability
+const bookingAvailabilityController = async (req,res) => {
+  try{
+      const date = moment(req.body.date, 'DD-MM-YY').toISOString()
+      const fromTime = moment(req.body.time, 'HH:mm').subtract(1, 'hours').toISOString()
+      const toTime = moment(req.body.time, 'HH:mm').add(1, 'hours').toISOString()
+      const doctorId = req.body.doctorId
+      const appointments = await appointmentModel.find({
+        doctorId,
+        date,
+        time:{
+          $gte:fromTime, 
+          $lte:toTime,
+        }
+      })
+      if(appointments.length > 0){
+        return res.status(200).send({
+          message:'Appointments not Available at this time',
+          success:true
+        })
+      }else{
+        return res.status(200).send({
+          success:true,
+          message:'Appointment available',
+        })
+      }
+  } catch (error) {
+      console.log(error)
+      res.status(500).send({
+        success:false,
+        error,
+        message:'Error In Booking'
+      })
   }
 }
 
-module.exports = { loginController, registerController, authController ,  applyDoctorController, getAllNotificationController, deleteAllNotificationController, getAllDoctorsController, bookAppointmentController };
+module.exports = { loginController, registerController, authController ,  applyDoctorController, getAllNotificationController, deleteAllNotificationController, getAllDoctorsController, bookAppointmentController, bookingAvailabilityController };

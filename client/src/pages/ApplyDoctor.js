@@ -1,46 +1,44 @@
-import React, { useState}from 'react';
+import React, { useState } from 'react';
 import Layout from './../components/Layout';
-import { Col, Form, Input, Row ,TimePicker, message} from 'antd';
-import {useSelector, useDispatch} from 'react-redux'
+import { Col, Form, Input, Row, TimePicker, message } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {showLoading,hideLoading} from '../redux/features/alertSlice'
-import axios from 'axios'
+import { showLoading, hideLoading } from '../redux/features/alertSlice';
+import axios from 'axios';
 import moment from 'moment';
 
 const ApplyDoctor = () => {
-    const {user} = useSelector(state => state.user)   
-    const [doctor, setDoctor] = useState(null);
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-    // Handle form submission
+    const { user } = useSelector(state => state.user);
+    const [doctor, setDoctor] = useState({});
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const handleFinish = async (values) => {
         try {
             dispatch(showLoading());
             const res = await axios.post('/api/v1/user/apply-doctor', {
                 ...values,
-                 userId:user._id,
+                userId: user._id,
                 timings: [
                     moment(values.timings[0]).format("HH:mm"),
                     moment(values.timings[1]).format("HH:mm"),
                 ]
-
-            },{
-                headers:{
+            }, {
+                headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
-            })
-            dispatch(hideLoading())
+            });
+            dispatch(hideLoading());
             if (res.data.success) {
                 message.success(res.data.message);
                 navigate("/");
-            }else{
+            } else {
                 message.error(res.data.message);
             }
         } catch (error) {
             dispatch(hideLoading());
-            console.log(error)
-            message.error('Something went wrong')
-            
+            console.log(error);
+            message.error('Something went wrong');
         }
     };
 
@@ -48,16 +46,16 @@ const ApplyDoctor = () => {
         <Layout>
             <h1 className="text-center">Apply Doctor</h1>
             <Form layout="vertical" onFinish={handleFinish} className="m-3"
-             initialValues={{
-                ...doctor,
-                timings: doctor.timings && doctor.timings.length === 2
-                    ? [
-                        moment(doctor.timings[0], "HH:mm"),
-                        moment(doctor.timings[1], "HH:mm"),
-                      ]
-                    : [],
-                feesperConsultation: doctor.feesPerConsultation,
-            }}
+                initialValues={{
+                    ...doctor,
+                    timings: doctor.timings && doctor.timings.length === 2
+                        ? [
+                            moment(doctor.timings[0], "HH:mm"),
+                            moment(doctor.timings[1], "HH:mm"),
+                        ]
+                        : [],
+                    feesPerConsultation: doctor.feesPerConsultation,
+                }}
             >
                 <h4 className="">Personal Details</h4>
                 <Row gutter={20}>
@@ -67,7 +65,6 @@ const ApplyDoctor = () => {
                             name="firstName"
                             required
                             rules={[{ required: true }]}
-
                         >
                             <Input type="text" placeholder="Your first name" />
                         </Form.Item>
@@ -116,7 +113,7 @@ const ApplyDoctor = () => {
                     </Col>
                     <Col xs={24} md={8} lg={8}>
                         <Form.Item
-                            label="website"
+                            label="Website"
                             name="website"
                             required
                             rules={[{ required: true }]}
@@ -144,35 +141,33 @@ const ApplyDoctor = () => {
                             required
                             rules={[{ required: true }]}
                         >
-                            <Input type="text" placeholder="Your experence" />
+                            <Input type="text" placeholder="Your experience" />
                         </Form.Item>
                     </Col>
                     <Col xs={24} md={8} lg={8}>
                         <Form.Item
-                            label="Fees per Cunsaltation"
-                            name="feesperCunsaltation"
+                            label="Fees per Consultation"
+                            name="feesPerConsultation" // Corrected this line
                             required
                             rules={[{ required: true }]}
                         >
-                            <Input type="text" placeholder="Your contact no" />
+                            <Input type="number" placeholder="Your fee per consultation" />
                         </Form.Item>
                     </Col>
                     <Col xs={24} md={8} lg={8}>
                         <Form.Item
                             label="Timings"
-                            name="timing"
+                            name="timings"
                             required
-                            
                         >
-                            <TimePicker.RangePicker  format="HH:mm"/>
+                            <TimePicker.RangePicker format="HH:mm" />
                         </Form.Item>
                     </Col>
-                    <Col xs={24} md={8} lg={8} ></Col>
-                    <Col xs={24} md={8} lg={8} >
-                    <button className='btn btn-primary form-btn' type="submit">Submit</button>
+                    <Col xs={24} md={8} lg={8}></Col>
+                    <Col xs={24} md={8} lg={8}>
+                        <button className='btn btn-primary form-btn' type="submit">Submit</button>
                     </Col>
                 </Row>
-               
             </Form>
         </Layout>
     );

@@ -70,6 +70,7 @@ const NotificationPage = () => {
                 </div>
                 {
                     user?.notification.map(notificationMsg => (
+                        
                         <div className="card" style={{cursor:"pointer"}}>
                          <div className="card-text" onClick={ () => navigate(notificationMsg.onClickPath)} >
                         {notificationMsg.message}

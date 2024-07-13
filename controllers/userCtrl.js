@@ -238,4 +238,27 @@ const bookingAvailabilityController = async (req,res) => {
   }
 }
 
-module.exports = { loginController, registerController, authController ,  applyDoctorController, getAllNotificationController, deleteAllNotificationController, getAllDoctorsController, bookAppointmentController, bookingAvailabilityController };
+
+// get Appoinments
+const userAppoinmentsController = async (req, res) => {
+  try {
+      const userId = req.query.userId; // Get userId from query parameters
+      const appointments = await appointmentModel.find({ userId });
+      
+      res.status(200).send({
+          success: true,
+          message: 'User appointments fetched successfully',
+          data: appointments,
+      });
+  } catch (error) {
+      console.log(error); // Correct logging
+      res.status(500).send({
+          success: false,
+          error,
+          message: 'Error in user appointments',
+      });
+  }
+};
+
+
+module.exports = { loginController, registerController, authController ,  applyDoctorController, getAllNotificationController, deleteAllNotificationController, getAllDoctorsController, bookAppointmentController, bookingAvailabilityController, userAppoinmentsController };

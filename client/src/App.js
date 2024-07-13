@@ -13,6 +13,7 @@ import Users from './pages/admin/Users';
 import Doctors from './pages/admin/Doctors';
 import Profile from './pages/doctor/Profile';
 import BookingPage from './pages/BookingPage';
+import Appoinments from './pages/Appoinments';
 
 
 
@@ -97,6 +98,13 @@ function App() {
 
        <Register />
     </PublicRoute>
+    }/>
+
+<Route path="/appoinments" 
+    element={
+    <ProtectedRoute>
+      <Appoinments />
+    </ProtectedRoute>
     }/>
 
 

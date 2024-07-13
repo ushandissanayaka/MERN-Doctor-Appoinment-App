@@ -2,9 +2,9 @@ import React from 'react'
 
 function Spinner() {
   return (
-   <div classname="d-flex justify-content-center spinner">
-  <div classname="spinner-border" role="status">
-    <span classname="visually-hidden">Loading...</span>
+   <div className="d-flex justify-content-center spinner">
+  <div className="spinner-border" role="status">
+    <span className="visually-hidden">Loading...</span>
   </div>
 </div>
 

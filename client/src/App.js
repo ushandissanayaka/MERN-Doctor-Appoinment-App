@@ -14,6 +14,7 @@ import Doctors from './pages/admin/Doctors';
 import Profile from './pages/doctor/Profile';
 import BookingPage from './pages/BookingPage';
 import Appoinments from './pages/Appoinments';
+import DoctorAppoinments from './pages/doctor/DoctorAppoinments';
 
 
 
@@ -104,6 +105,13 @@ function App() {
     element={
     <ProtectedRoute>
       <Appoinments />
+    </ProtectedRoute>
+    }/>
+
+<Route path="/doctor-appoinments" 
+    element={
+    <ProtectedRoute>
+      <DoctorAppoinments />
     </ProtectedRoute>
     }/>
 
